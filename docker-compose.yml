@@ -1,6 +1,6 @@
 services:
   web:
-    build: .
+    build: ./app
     ports:
       - "5000:5000"
     volumes:
@@ -8,9 +8,10 @@ services:
     container_name: app_web
 
   jenkins:
+    build: ./jenkins
     image: jenkins/jenkins:lts
-    privileged: true
     user: root
+    privileged: true
     ports:
       - "8080:8080"
       - "50000:50000"
