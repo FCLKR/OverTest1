@@ -1,17 +1,17 @@
+version: '3.8'
+
 services:
   web:
-    build: ./app
+    build: .
     ports:
       - "5000:5000"
     volumes:
-      - ./app:/app
+      - .:/app
     container_name: app_web
 
   jenkins:
-    build: ./jenkins
     image: jenkins/jenkins:lts
     user: root
-    privileged: true
     ports:
       - "8080:8080"
       - "50000:50000"
