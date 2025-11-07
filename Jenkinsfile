@@ -5,14 +5,14 @@ pipeline {
         DOCKER_HOST = 'unix:///var/run/docker.sock'
     }
 
-    stages {
-        stage('Construir contenedores') {
+   stages {
+        /*stage('Construir contenedores') {
             steps {
                 sh 'docker-compose build'
             }
-        }
-/*
-        stage('Ejecutar pruebas') {
+        }*/
+
+       /* stage('Ejecutar pruebas') {
             steps {
                 sh 'docker-compose run --rm web python -m unittest discover tests'
             }
