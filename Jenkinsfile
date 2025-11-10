@@ -1,27 +1,33 @@
 pipeline {
-    agent any
+  agent any
 
-    environment {
-        DOCKER_HOST = 'unix:///var/run/docker.sock'
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
     }
 
-    stages {
-        stage('Construir contenedores') {
-            steps {
-                sh 'docker compose build'
-            }
+    stage('Deploy') {
+      steps {
+        // Ejecutar docker compose en el workspace del job
+        dir("${WORKSPACE}") {
+          sh '''
+            set -e
+            docker compose up -d
+            docker compose ps
+          '''
         }
-/*
-        stage('Ejecutar pruebas') {
-            steps {
-                sh 'docker-compose run --rm web python -m unittest discover tests'
-            }
-        }
-*/
-        stage('Desplegar') {
-            steps {
-                sh 'docker compose up -d'
-            }
-        }
+      }
     }
+  }
+
+  post {
+    success {
+      echo "✅ Despliegue completado correctamente."
+    }
+    failure {
+      echo "❌ Fallo en el despliegue. Revisa los logs."
+    }
+  }
 }
